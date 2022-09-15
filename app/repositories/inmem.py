@@ -6,34 +6,34 @@ from .base import TaskRepository
 
 
 class InMemoryTaskRepository(TaskRepository):
-    def __init__(self) -> None:
-        self.tasks: List[Task] = []
+    def __init__(self, tasks: List[Task] = []) -> None:
+        self._tasks: List[Task] = tasks
 
     def add(self, t: TaskCreate) -> Task:
         try:
-            id = self.tasks[-1].id + 1
+            id = self._tasks[-1].id + 1
         except IndexError:
             id = 1
 
         task = Task(
             id=id, title=t.title, description=t.description, is_done=False
         )
-        self.tasks.append(task)
+        self._tasks.append(task)
 
         return task
 
     def get(self, task_id: int) -> Task | None:
-        task = [task for task in self.tasks if task.id == task_id]
+        task = [task for task in self._tasks if task.id == task_id]
         if len(task) == 0:
             return None
 
         return task[0]
 
     def list(self) -> List[Task]:
-        return self.tasks
+        return self._tasks
 
     def update(self, task_id: int, t: TaskUpdate) -> Task | None:
-        task = [task for task in self.tasks if task.id == task_id]
+        task = [task for task in self._tasks if task.id == task_id]
         if len(task) == 0:
             return None
 
@@ -44,10 +44,10 @@ class InMemoryTaskRepository(TaskRepository):
         return task[0]
 
     def delete(self, task_id: int) -> bool:
-        task = [task for task in self.tasks if task.id == task_id]
+        task = [task for task in self._tasks if task.id == task_id]
         if len(task) == 0:
             return False
 
-        self.tasks.remove(task[0])
+        self._tasks.remove(task[0])
 
         return True
