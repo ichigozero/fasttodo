@@ -17,27 +17,10 @@ app.include_router(task.router)
 client = TestClient(app)
 
 
-def default_tasks() -> List[Task]:
-    return [
-        Task(
-            id=1,
-            title="Buy groceries",
-            description="Milk, Cheese, Pizza, Fruit, Tylenol",
-            is_done=False,
-        ),
-        Task(
-            id=2,
-            title="Learn Python",
-            description="Need to find a good Python tutorial on the web",
-            is_done=False,
-        ),
-    ]
-
-
 @pytest.fixture
-def task_svc():
+def task_svc(default_tasks: List[Task]):
     def mock_svc() -> TaskService:
-        t = InMemoryTaskRepository(default_tasks())
+        t = InMemoryTaskRepository(default_tasks)
         return TaskService(t)
 
     app.dependency_overrides[task.task_svc] = mock_svc
@@ -45,7 +28,7 @@ def task_svc():
     app.dependency_overrides = {}
 
 
-def test_add_task(task_svc):
+def test_add_task(task_svc, default_tasks: List[Task]):
     res = client.post(
         "/api/v1.0/tasks",
         json={
@@ -65,18 +48,18 @@ def test_add_task(task_svc):
     }
 
 
-def test_get_tasks(task_svc):
+def test_get_tasks(task_svc, default_tasks: List[Task]):
     res = client.get("/api/v1.0/tasks")
 
     assert res.status_code == 200
-    assert res.json() == {"tasks": jsonable_encoder(default_tasks())}
+    assert res.json() == {"tasks": jsonable_encoder(default_tasks)}
 
 
-def test_get_task(task_svc):
+def test_get_task(task_svc, default_tasks: List[Task]):
     res = client.get("/api/v1.0/tasks/1")
 
     assert res.status_code == 200
-    assert res.json() == {"task": jsonable_encoder(default_tasks()[0])}
+    assert res.json() == {"task": jsonable_encoder(default_tasks[0])}
 
 
 def test_get_missing_task(task_svc):

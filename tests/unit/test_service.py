@@ -7,26 +7,9 @@ from app.schemas.task import Task, TaskCreate, TaskUpdate
 from app.services.task import TaskService
 
 
-def default_tasks() -> List[Task]:
-    return [
-        Task(
-            id=1,
-            title="Buy groceries",
-            description="Milk, Cheese, Pizza, Fruit, Tylenol",
-            is_done=False,
-        ),
-        Task(
-            id=2,
-            title="Learn Python",
-            description="Need to find a good Python tutorial on the web",
-            is_done=False,
-        ),
-    ]
-
-
 @pytest.fixture
-def task_svc() -> TaskService:
-    t = InMemoryTaskRepository(default_tasks())
+def task_svc(default_tasks: List[Task]) -> TaskService:
+    t = InMemoryTaskRepository(default_tasks)
     return TaskService(t)
 
 
@@ -46,16 +29,16 @@ def test_add_task(task_svc: TaskService):
     assert got == want
 
 
-def test_get_tasks(task_svc: TaskService):
+def test_get_tasks(task_svc: TaskService, default_tasks: List[Task]):
     got = task_svc.list()
-    want = default_tasks()
+    want = default_tasks
 
     assert got == want
 
 
-def test_get_task(task_svc: TaskService):
+def test_get_task(task_svc: TaskService, default_tasks: List[Task]):
     got = task_svc.get(task_id=1)
-    want = default_tasks()[0]
+    want = default_tasks[0]
 
     assert got == want
 
