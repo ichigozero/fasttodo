@@ -1,5 +1,3 @@
-from typing import List
-
 from sqlalchemy.orm import Session
 
 from models.task import Task as TaskModel
@@ -23,7 +21,7 @@ class SQLTaskRepository(TaskRepository):
     def get(self, task_id: int) -> Task | None:
         return self.db.query(TaskModel).filter(TaskModel.id == task_id).first()
 
-    def list(self) -> List[Task]:
+    def list(self) -> list[Task]:
         return self.db.query(TaskModel).all()
 
     def update(self, task_id: int, task: TaskUpdate) -> Task | None:

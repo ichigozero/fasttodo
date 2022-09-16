@@ -1,5 +1,3 @@
-from typing import List
-
 from repositories.base import TaskRepository
 from schemas.task import Task, TaskCreate, TaskUpdate
 
@@ -14,7 +12,7 @@ class TaskService:
     def get(self, task_id: int) -> Task | None:
         return self.task.get(task_id)
 
-    def list(self) -> List[Task]:
+    def list(self) -> list[Task]:
         return self.task.list()
 
     def update(self, task_id: int, task: TaskUpdate) -> Task | None:
