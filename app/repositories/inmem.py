@@ -1,13 +1,11 @@
-from typing import List
-
 from schemas.task import Task, TaskCreate, TaskUpdate
 
 from .base import TaskRepository
 
 
 class InMemoryTaskRepository(TaskRepository):
-    def __init__(self, tasks: List[Task] = []) -> None:
-        self._tasks: List[Task] = tasks
+    def __init__(self, tasks: list[Task] = []) -> None:
+        self._tasks: list[Task] = tasks
 
     def add(self, t: TaskCreate) -> Task:
         try:
@@ -29,7 +27,7 @@ class InMemoryTaskRepository(TaskRepository):
 
         return task[0]
 
-    def list(self) -> List[Task]:
+    def list(self) -> list[Task]:
         return self._tasks
 
     def update(self, task_id: int, t: TaskUpdate) -> Task | None:

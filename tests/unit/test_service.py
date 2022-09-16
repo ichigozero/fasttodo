@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 
 from app.repositories.inmem import InMemoryTaskRepository
@@ -8,7 +6,7 @@ from app.services.task import TaskService
 
 
 @pytest.fixture
-def task_svc(default_tasks: List[Task]) -> TaskService:
+def task_svc(default_tasks: list[Task]) -> TaskService:
     t = InMemoryTaskRepository(default_tasks)
     return TaskService(t)
 
@@ -29,14 +27,14 @@ def test_add_task(task_svc: TaskService):
     assert got == want
 
 
-def test_get_tasks(task_svc: TaskService, default_tasks: List[Task]):
+def test_get_tasks(task_svc: TaskService, default_tasks: list[Task]):
     got = task_svc.list()
     want = default_tasks
 
     assert got == want
 
 
-def test_get_task(task_svc: TaskService, default_tasks: List[Task]):
+def test_get_task(task_svc: TaskService, default_tasks: list[Task]):
     got = task_svc.get(task_id=1)
     want = default_tasks[0]
 

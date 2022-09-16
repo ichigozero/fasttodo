@@ -1,12 +1,10 @@
-from typing import List
-
 import pytest
 
 from app.schemas.task import Task
 
 
 @pytest.fixture
-def default_tasks() -> List[Task]:
+def default_tasks() -> list[Task]:
     return [
         Task(
             id=1,

@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 
 from fastapi import FastAPI
@@ -18,7 +16,7 @@ client = TestClient(app)
 
 
 @pytest.fixture
-def task_svc(default_tasks: List[Task]):
+def task_svc(default_tasks: list[Task]):
     def mock_svc() -> TaskService:
         t = InMemoryTaskRepository(default_tasks)
         return TaskService(t)
@@ -28,7 +26,7 @@ def task_svc(default_tasks: List[Task]):
     app.dependency_overrides = {}
 
 
-def test_add_task(task_svc, default_tasks: List[Task]):
+def test_add_task(task_svc, default_tasks: list[Task]):
     res = client.post(
         "/api/v1.0/tasks",
         json={
@@ -48,14 +46,14 @@ def test_add_task(task_svc, default_tasks: List[Task]):
     }
 
 
-def test_get_tasks(task_svc, default_tasks: List[Task]):
+def test_get_tasks(task_svc, default_tasks: list[Task]):
     res = client.get("/api/v1.0/tasks")
 
     assert res.status_code == 200
     assert res.json() == {"tasks": jsonable_encoder(default_tasks)}
 
 
-def test_get_task(task_svc, default_tasks: List[Task]):
+def test_get_task(task_svc, default_tasks: list[Task]):
     res = client.get("/api/v1.0/tasks/1")
 
     assert res.status_code == 200

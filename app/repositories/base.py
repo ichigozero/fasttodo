@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from schemas.task import Task, TaskCreate, TaskUpdate
 
@@ -14,7 +13,7 @@ class TaskRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def list(self) -> List[Task]:
+    def list(self) -> list[Task]:
         raise NotImplementedError
 
     @abstractmethod
