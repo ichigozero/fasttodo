@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from schemas.task import Task, TaskCreate, TaskUpdate
+from app.schemas.task import Task, TaskCreate, TaskUpdate
 
 
 class TaskRepository(ABC):
