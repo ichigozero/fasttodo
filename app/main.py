@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from config.database import create_tables
-from routers import task
+from app.config.database import create_tables
+from app.routers import task
 
 create_tables()
 

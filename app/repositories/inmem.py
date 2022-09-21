@@ -1,6 +1,5 @@
-from schemas.task import Task, TaskCreate, TaskUpdate
-
-from .base import TaskRepository
+from app.repositories.base import TaskRepository
+from app.schemas.task import Task, TaskCreate, TaskUpdate
 
 
 class InMemoryTaskRepository(TaskRepository):

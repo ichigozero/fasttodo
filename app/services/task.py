@@ -1,5 +1,5 @@
-from repositories.base import TaskRepository
-from schemas.task import Task, TaskCreate, TaskUpdate
+from app.repositories.base import TaskRepository
+from app.schemas.task import Task, TaskCreate, TaskUpdate
 
 
 class TaskService:
