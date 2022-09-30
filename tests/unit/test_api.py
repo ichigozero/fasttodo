@@ -1,8 +1,7 @@
-import pytest
-
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
+import pytest
 
 from app.repositories.inmem import InMemoryTaskRepository
 from app.routers import task
